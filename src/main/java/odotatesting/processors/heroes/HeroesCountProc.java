@@ -9,12 +9,12 @@ import org.json.JSONArray;
 
 import odotatesting.utils.CallOpendotaAPI;
 
-public class HeroesCount {
+public class HeroesCountProc {
 
-    private static final Logger logger = LogManager.getLogger(HeroesCount.class);
+    private static final Logger logger = LogManager.getLogger(HeroesCountProc.class);
     private final Page page;
 
-    public HeroesCount(Page page) {
+    public HeroesCountProc(Page page) {
         this.page = page;
     }
 

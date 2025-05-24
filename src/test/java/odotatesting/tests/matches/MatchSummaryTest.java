@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import odotatesting.base.BaseTest;
 import odotatesting.pages.MatchesPage;
-import odotatesting.processors.matches.MatchSummary;
+import odotatesting.processors.matches.MatchSummaryProc;
 import odotatesting.utils.CallOpendotaAPI;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MatchSummaryTest extends BaseTest {
 
     private MatchesPage matchesPage;
-    MatchSummary matchSummary;
+    MatchSummaryProc matchSummary;
 
     @BeforeMethod
     public void findMatch() {
@@ -32,7 +32,7 @@ public class MatchSummaryTest extends BaseTest {
                 .clickFirstTopPubMatchOnList()
                 .clickMatchesOverview();
 
-        matchSummary = new MatchSummary(matchesPage.getPage());
+        matchSummary = new MatchSummaryProc(matchesPage.getPage());
         logger.info("URL: {}", matchesPage.getPageURL());
     }
 

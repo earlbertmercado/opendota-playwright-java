@@ -10,12 +10,12 @@ import org.json.JSONObject;
 
 import odotatesting.pages.MatchesPage;
 
-public class MatchSummary {
+public class MatchSummaryProc {
 
-    private static final Logger logger = LogManager.getLogger(MatchSummary.class);
+    private static final Logger logger = LogManager.getLogger(MatchSummaryProc.class);
     private final Page page;
 
-    public MatchSummary(Page page) {
+    public MatchSummaryProc(Page page) {
         this.page = page;
     }
 

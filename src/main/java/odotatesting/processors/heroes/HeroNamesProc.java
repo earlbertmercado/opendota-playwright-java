@@ -7,18 +7,19 @@ import java.util.List;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
-import odotatesting.utils.CallOpendotaAPI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class HeroNames {
+import odotatesting.utils.CallOpendotaAPI;
 
-    private static final Logger logger = LogManager.getLogger(HeroNames.class);
+public class HeroNamesProc {
+
+    private static final Logger logger = LogManager.getLogger(HeroNamesProc.class);
     private final Page page;
 
-    public HeroNames(Page page) {
+    public HeroNamesProc(Page page) {
         this.page = page;
     }
 
