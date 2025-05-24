@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 import odotatesting.base.BaseTest;
 import odotatesting.pages.HeroesPage;
-import odotatesting.processors.heroes.HeroesCount;
+import odotatesting.processors.heroes.HeroesCountProc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,13 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HeroesCountTest extends BaseTest {
 
     private HeroesPage heroesPage;
-    HeroesCount heroesCount;
+    HeroesCountProc heroesCount;
 
     @BeforeMethod
     public void goToHeroesPage() {
         heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
 
-        heroesCount = new HeroesCount(heroesPage.getPage());
+        heroesCount = new HeroesCountProc(heroesPage.getPage());
         logger.info("URL: {}", heroesPage.getPageURL());
     }
 

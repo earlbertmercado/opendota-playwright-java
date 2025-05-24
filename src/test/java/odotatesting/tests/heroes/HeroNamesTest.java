@@ -1,25 +1,30 @@
 package odotatesting.tests.heroes;
 
-import odotatesting.base.BaseTest;
-import odotatesting.pages.HeroesPage;
-import odotatesting.processors.heroes.HeroNames;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import odotatesting.base.BaseTest;
+import odotatesting.pages.HeroesPage;
+import odotatesting.processors.heroes.HeroNamesProc;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Tests the consistency of hero names displayed on the web interface
+ * against hero names retrieved from the API.
+ */
 public class HeroNamesTest extends BaseTest {
 
     private HeroesPage heroesPage;
-    HeroNames heroNames;
+    HeroNamesProc heroNames;
 
     @BeforeMethod
     public void goToHeroesPage() {
         heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
 
-        heroNames = new HeroNames(heroesPage.getPage());
+        heroNames = new HeroNamesProc(heroesPage.getPage());
         logger.info("URL: {}", heroesPage.getPageURL());
     }
 
