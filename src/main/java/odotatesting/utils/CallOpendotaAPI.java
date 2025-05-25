@@ -38,7 +38,7 @@ public class CallOpendotaAPI {
         }
     }
 
-    public static JSONObject getMatchDetails(String matchId) {
+    public static JSONObject matches(String matchId) {
         return sendGetRequest(ApiConstants.MATCHES_ENDPOINT + "/" + matchId, JSONObject.class);
     }
 
