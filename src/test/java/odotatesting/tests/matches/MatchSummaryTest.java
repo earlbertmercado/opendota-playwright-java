@@ -39,7 +39,7 @@ public class MatchSummaryTest extends BaseTest {
     @Test
     public void testMatchSummary() {
         logger.info("Match ID: {}", matchesPage.getMatchId());
-        JSONObject matchDetailsFromAPI = CallOpendotaAPI.getMatchDetails(matchesPage.getMatchId());
+        JSONObject matchDetailsFromAPI = CallOpendotaAPI.matches(matchesPage.getMatchId());
 
         Map<String, Object> matchSummaryDataFromWeb = matchSummary.getMatchSummaryFromWeb(matchesPage);
         Map<String, Object> matchSummaryDataFromAPI = matchSummary.getMatchSummaryFromAPI(matchDetailsFromAPI);
