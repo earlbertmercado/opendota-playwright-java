@@ -48,5 +48,7 @@ public class MatchSummaryTest extends BaseTest {
                 .as("Match summary data from web")
                 .isNotNull()
                 .isEqualTo(matchSummaryDataFromAPI);
+
+        logger.info("Matches Summary test completed successfully.");
     }
 }

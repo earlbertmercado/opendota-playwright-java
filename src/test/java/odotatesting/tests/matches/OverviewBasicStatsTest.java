@@ -67,5 +67,7 @@ public class OverviewBasicStatsTest extends BaseTest {
                 .as("Dire stats from web")
                 .isNotNull()
                 .isEqualTo(direStatsFromAPI);
+
+        logger.info("Matches Overview Basic Stats test completed successfully.");
     }
 }

@@ -36,5 +36,7 @@ public class HeroesCountTest extends BaseTest {
                 .as("Number of heroes in the table")
                 .isNotNull()
                 .isEqualTo(heroesCountFromAPI);
+
+        logger.info("Hero names test completed successfully.");
     }
 }

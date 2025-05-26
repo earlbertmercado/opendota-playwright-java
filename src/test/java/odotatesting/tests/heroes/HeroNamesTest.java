@@ -38,5 +38,7 @@ public class HeroNamesTest extends BaseTest {
                 .isNotNull()
                 .isNotEmpty()
                 .isEqualTo(heroNamesFromAPI);
+
+        logger.info("Hero names test completed successfully.");
     }
 }
