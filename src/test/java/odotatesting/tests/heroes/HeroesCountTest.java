@@ -37,6 +37,6 @@ public class HeroesCountTest extends BaseTest {
                 .isNotNull()
                 .isEqualTo(heroesCountFromAPI);
 
-        logger.info("Hero names test completed successfully.");
+        logger.info("{} completed successfully.", this.getClass().getSimpleName());
     }
 }

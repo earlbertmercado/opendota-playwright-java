@@ -1,5 +1,8 @@
 package odotatesting.processors.heroes;
 
+import java.util.List;
+import java.util.Objects;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -8,9 +11,6 @@ import org.apache.logging.log4j.Logger;
 
 import odotatesting.constants.HeroesPageLocators;
 import odotatesting.pages.HeroesPage;
-
-import java.util.List;
-import java.util.Objects;
 
 public class HeroImagesProc {
 
@@ -53,6 +53,7 @@ public class HeroImagesProc {
         } else {
             logger.error("Some hero images failed to load.");
         }
+
         return allImagesValid;
     }
 

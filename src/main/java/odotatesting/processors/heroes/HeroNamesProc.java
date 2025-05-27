@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import odotatesting.constants.HeroesPageLocators;
 import odotatesting.utils.CallOpendotaAPI;
 
 public class HeroNamesProc {
@@ -24,23 +25,20 @@ public class HeroNamesProc {
     }
 
     public List<String> getHeroListFromWeb() {
-        final String ROWS_LOCATOR = "xpath=/html//table[1]/tbody[1]/tr";
-        final String HERO_NAME_LOCATOR_RELATIVE = "//td[1]//a";
-
         try {
             // Wait for at least one row to be visible, ensuring the table has loaded
-            this.page.locator(ROWS_LOCATOR).
+            this.page.locator(HeroesPageLocators.ROWS_LOCATOR).
                     first().waitFor(new Locator.
                             WaitForOptions().
                             setState(WaitForSelectorState.VISIBLE));
 
             // Get all row locators
-            List<Locator> heroRows = this.page.locator(ROWS_LOCATOR).all();
+            List<Locator> heroRows = this.page.locator(HeroesPageLocators.ROWS_LOCATOR).all();
             List<String> heroNameList = new ArrayList<>();
 
             for (Locator row : heroRows) {
                 String heroName = row
-                        .locator(HERO_NAME_LOCATOR_RELATIVE)
+                        .locator(HeroesPageLocators.HERO_NAME_LOCATOR_RELATIVE)
                         .textContent()
                         .toLowerCase();
 

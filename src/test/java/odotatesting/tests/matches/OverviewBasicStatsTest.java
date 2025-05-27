@@ -68,6 +68,6 @@ public class OverviewBasicStatsTest extends BaseTest {
                 .isNotNull()
                 .isEqualTo(direStatsFromAPI);
 
-        logger.info("Matches Overview Basic Stats test completed successfully.");
+        logger.info("{} completed successfully.", this.getClass().getSimpleName());
     }
 }

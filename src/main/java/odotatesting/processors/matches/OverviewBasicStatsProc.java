@@ -13,40 +13,51 @@ import org.json.JSONObject;
 public class OverviewBasicStatsProc {
 
     private static final Logger logger = LogManager.getLogger(OverviewBasicStatsProc.class);
+    private final Page page;
+
     private static final String RADIANT_TEAM = "Radiant";
     private static final String DIRE_TEAM = "Dire";
 
-    private final Page page;
+    private static final String RADIANT_TABLE_CLASS = "teamtable-radiant";
+    private static final String DIRE_TABLE_CLASS = "teamtable-dire";
+    private static final String TEAM_TABLE_SELECTOR_PREFIX = ".teamtable.";
+    private static final String PLAYER_ROW_SELECTOR_SUFFIX = " table tbody tr:nth-child(";
+    private static final String COLUMN_SELECTOR_SUFFIX = ") td:nth-child(";
+
+    private static final int PLAYERS_PER_TEAM = 5;
+    private static final int FIRST_STAT_COLUMN = 2;
+    private static final int LAST_COLUMN = 15;
+
+    // Use an unmodifiable set for constants to prevent accidental modification
+    private static final Set<Integer> COLUMNS_TO_SKIP = Collections.unmodifiableSet(Set.of(7, 11));
+
 
     public OverviewBasicStatsProc(Page page) {
         this.page = page;
     }
 
-    // Method for rounding API values to align with the web format
-    // (not 100% working, need to know the exact and precise rounding formula)
+    /**
+     * Method for rounding API values to align with the web format
+     * Return The formatted string (e.g., "1234" -> "1.2k", "1200" -> "1.2k", "1000" -> "1k").
+     * Returns the original value as a string if <= 1000.
+     * (not 100% working, need to know the exact and precise rounding formula)
+     */
     private static String formatValue(int value) {
-        if (value > 1000) {
-            int lastTwoDigits = value % 100;
-            double roundedValue;
-
-            if (lastTwoDigits <= 50) {
-                roundedValue = Math.floor(value / 1000.0 * 10) / 10;
-            } else {
-                roundedValue = Math.ceil(value / 1000.0 * 10) / 10;
-            }
-
-            String formattedValue = String.format("%.1fk", roundedValue);
-            return formattedValue.endsWith(".0k") ? formattedValue.replace(".0k", "k") : formattedValue;
-        } else {
+        if (value <= 1000) {
             return Integer.toString(value);
         }
+
+        double kiloValue = value / 1000.0;
+        String formattedValue = String.format(Locale.US, "%.1fk", kiloValue);
+        return formattedValue.endsWith(".0k") ? formattedValue.replace(".0k", "k") : formattedValue;
     }
 
     // Returns the corresponding CSS class name for the specified team.
     private static String getTeamTableClassName(String team) {
-        final String RADIANT_TABLE_CLASS = "teamtable-radiant";
-        final String DIRE_TABLE_CLASS = "teamtable-dire";
-
+        if (team == null) {
+            logger.warn("Team name cannot be null.");
+            return null;
+        }
         if (team.equalsIgnoreCase(RADIANT_TEAM)) {
             return RADIANT_TABLE_CLASS;
         } else if (team.equalsIgnoreCase(DIRE_TEAM)) {
@@ -64,16 +75,11 @@ public class OverviewBasicStatsProc {
      * (Returns empty JSON if table not found.)
      */
     public String extractMatchStatsFromWeb(List<String> statKeys, String team) {
-        final int PLAYERS_PER_TEAM = 5;
-        final int FIRST_STAT_COLUMN = 2;
-        final int LAST_COLUMN = 15;
-        final Set<Integer> COLUMNS_TO_SKIP = Set.of(7, 11);
-
         List<Map<String, Object>> allPlayerStats = new ArrayList<>();
-
         String teamClassName = getTeamTableClassName(team);
 
         if (teamClassName == null) {
+            logger.warn("Could not determine team table class for team: {}", team);
             return JsonOutput.prettyPrint(JsonOutput.toJson(allPlayerStats));
         }
 
@@ -81,28 +87,37 @@ public class OverviewBasicStatsProc {
         for (int playerNumber = 1; playerNumber <= PLAYERS_PER_TEAM; playerNumber++) {
             Map<String, Object> playerStats = new LinkedHashMap<>();
 
-            int playerIndex = team.equals(RADIANT_TEAM) ? playerNumber - 1 : playerNumber + 4;
+            int playerIndex = team.equalsIgnoreCase(RADIANT_TEAM) ? playerNumber - 1 : playerNumber + 4;
             playerStats.put("player_index", playerIndex);
 
             int statKeyIndex = 0;
 
             // Iterate through each relevant statistic column
             for (int column = FIRST_STAT_COLUMN; column <= LAST_COLUMN; column++) {
-                // Skip blank columns 7 and 11
+                // Skip columns that are not stats
                 if (!COLUMNS_TO_SKIP.contains(column)) {
+                    String cssSelector = TEAM_TABLE_SELECTOR_PREFIX + teamClassName +
+                            PLAYER_ROW_SELECTOR_SUFFIX + playerNumber +
+                            COLUMN_SELECTOR_SUFFIX + column + ")";
 
-                    String cssSelector = ".teamtable." + teamClassName + " table tbody tr:nth-child(" + playerNumber + ") td:nth-child(" + column + ")";
                     Locator statElement = this.page.locator(cssSelector);
+                    String statValue = statElement.textContent().trim();
 
-                    String statValue = "-".equals(statElement.textContent()) ? "0" : statElement.textContent();
-                    playerStats.put(statKeys.get(statKeyIndex), statValue);
+                    String finalStatValue = "-".equals(statValue) ? "0" : statValue;
+
+                    if (statKeyIndex < statKeys.size()) {
+                        playerStats.put(statKeys.get(statKeyIndex), finalStatValue);
+                    } else {
+                        logger.warn("Stat key not found for column {}. Index: {}", column, statKeyIndex);
+                    }
                     statKeyIndex++;
                 }
             }
             allPlayerStats.add(playerStats);
         }
-        logger.info("Extracted Data From Web - {}", JsonOutput.prettyPrint(JsonOutput.toJson(allPlayerStats)));
-        return JsonOutput.prettyPrint(JsonOutput.toJson(allPlayerStats));
+        String jsonOutput = JsonOutput.prettyPrint(JsonOutput.toJson(allPlayerStats));
+        logger.info("Extracted Data From Web - {}", jsonOutput);
+        return jsonOutput;
     }
 
     /**
@@ -111,20 +126,27 @@ public class OverviewBasicStatsProc {
      * specified team.
      */
     public static String extractMatchStatsFromAPI(JSONObject matchDetails, String team) {
-
-        int playerStartIndex = team.equalsIgnoreCase("Radiant") ? 0 : 5;
-        int playerEndIndex = playerStartIndex + 4;
-
         List<Map<String, Object>> extractedStatsFromAPI = new ArrayList<>();
+        JSONArray playersArray = matchDetails.optJSONArray("players");
 
-        JSONArray playersArray = matchDetails.getJSONArray("players");
+        if (playersArray == null) {
+            logger.warn("API response does not contain 'players' array.");
+            return JsonOutput.prettyPrint(JsonOutput.toJson(extractedStatsFromAPI));
+        }
 
-        for (int playerIndex = playerStartIndex; playerIndex <= playerEndIndex; playerIndex++) {
-            JSONObject playerStats = playersArray.getJSONObject(playerIndex);
+        int playerStartIndex = team.equalsIgnoreCase(RADIANT_TEAM) ? 0 : PLAYERS_PER_TEAM;
+        int playerEndIndex = playerStartIndex + PLAYERS_PER_TEAM - 1;
+
+        for (int i = playerStartIndex; i <= playerEndIndex; i++) {
+            JSONObject playerStats = playersArray.optJSONObject(i);
+            if (playerStats == null) {
+                logger.warn("Player data not found at index: {}", i);
+                continue;
+            }
+
             Map<String, Object> playerStatsMap = new LinkedHashMap<>();
 
-            // Ensure the order of keys matches the expected order
-            playerStatsMap.put("player_index", playerIndex);
+            playerStatsMap.put("player_index", i);
             playerStatsMap.put("level", String.valueOf(playerStats.optInt("level", 0)));
             playerStatsMap.put("kills", String.valueOf(playerStats.optInt("kills", 0)));
             playerStatsMap.put("deaths", String.valueOf(playerStats.optInt("deaths", 0)));
@@ -140,7 +162,8 @@ public class OverviewBasicStatsProc {
 
             extractedStatsFromAPI.add(playerStatsMap);
         }
-        logger.info("Extracted Data From API - {}", JsonOutput.prettyPrint(JsonOutput.toJson(extractedStatsFromAPI)));
-        return JsonOutput.prettyPrint(JsonOutput.toJson(extractedStatsFromAPI));
+        String jsonOutput = JsonOutput.prettyPrint(JsonOutput.toJson(extractedStatsFromAPI));
+        logger.info("Extracted Data From API - {}", jsonOutput);
+        return jsonOutput;
     }
 }

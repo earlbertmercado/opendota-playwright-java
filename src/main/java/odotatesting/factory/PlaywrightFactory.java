@@ -61,6 +61,7 @@ public class PlaywrightFactory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         return properties;
     }
 }

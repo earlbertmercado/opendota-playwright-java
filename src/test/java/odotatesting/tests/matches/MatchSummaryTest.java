@@ -49,6 +49,6 @@ public class MatchSummaryTest extends BaseTest {
                 .isNotNull()
                 .isEqualTo(matchSummaryDataFromAPI);
 
-        logger.info("Matches Summary test completed successfully.");
+        logger.info("{} completed successfully.", this.getClass().getSimpleName());
     }
 }
