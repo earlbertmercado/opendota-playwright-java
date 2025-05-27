@@ -1,13 +1,13 @@
 package odotatesting.tests.heroes;
 
+import java.util.List;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import odotatesting.base.BaseTest;
 import odotatesting.pages.HeroesPage;
 import odotatesting.processors.heroes.HeroNamesProc;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,6 +39,6 @@ public class HeroNamesTest extends BaseTest {
                 .isNotEmpty()
                 .isEqualTo(heroNamesFromAPI);
 
-        logger.info("Hero names test completed successfully.");
+        logger.info("{} completed successfully.", this.getClass().getSimpleName());
     }
 }

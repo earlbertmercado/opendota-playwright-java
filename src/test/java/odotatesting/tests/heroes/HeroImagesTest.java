@@ -34,6 +34,6 @@ public class HeroImagesTest extends BaseTest {
                 .as("Check if all hero images are loaded")
                 .isTrue();
 
-        logger.info("Hero images test completed successfully.");
+        logger.info("{} completed successfully.", this.getClass().getSimpleName());
     }
 }
