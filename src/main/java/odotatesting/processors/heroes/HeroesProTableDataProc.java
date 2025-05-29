@@ -13,14 +13,14 @@ import org.json.JSONObject;
 
 import odotatesting.constants.HeroesPageLocators;
 
-public class HeroesTableDataProc {
+public class HeroesProTableDataProc {
 
-    private static final Logger logger = LogManager.getLogger(HeroesTableDataProc.class);
+    private static final Logger logger = LogManager.getLogger(HeroesProTableDataProc.class);
     private final Page page;
 
     private static final int WEB_ELEMENT_WAIT_TIMEOUT_MS = 10000;
 
-    public HeroesTableDataProc(Page page) {
+    public HeroesProTableDataProc(Page page) {
         this.page = page;
     }
 

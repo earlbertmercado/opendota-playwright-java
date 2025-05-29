@@ -1,29 +1,30 @@
 package odotatesting.tests.heroes;
 
+import odotatesting.processors.heroes.HeroesProTableDataProc;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import odotatesting.base.BaseTest;
 import odotatesting.pages.HeroesPage;
-import odotatesting.processors.heroes.HeroesTableDataProc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test class validates the data displayed in the Heroes
- * table on the Heroes page. It collects data from the table,
- * and then performs checks if there are null or empty entries
+ * table on the Heroes page Pro tab. It collects data from the
+ * table, and then performs checks if there are null or empty
+ * entries
  */
-public class HeroesTableDataTest extends BaseTest {
+public class HeroesProTableDataTest extends BaseTest {
 
     private HeroesPage heroesPage;
-    HeroesTableDataProc heroesTableDataProc;
+    HeroesProTableDataProc heroesTableDataProc;
 
     @BeforeMethod
     public void goToHeroesPage() {
         heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
 
-        heroesTableDataProc = new HeroesTableDataProc(heroesPage.getPage());
+        heroesTableDataProc = new HeroesProTableDataProc(heroesPage.getPage());
         logger.info("URL: {}", heroesPage.getPageURL());
     }
 
