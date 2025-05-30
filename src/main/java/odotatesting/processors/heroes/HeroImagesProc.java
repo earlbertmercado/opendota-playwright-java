@@ -59,7 +59,7 @@ public class HeroImagesProc {
 
     private void waitForHeroImagesToLoad() {
         try {
-            page.waitForSelector(HeroesPageLocators.HERO_IMAGE, new Page.WaitForSelectorOptions()
+            page.waitForSelector(HeroesPageLocators.ALL_HERO_IMAGES, new Page.WaitForSelectorOptions()
                     .setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
             logger.debug("Image selector visible.");
         } catch (Exception e) {

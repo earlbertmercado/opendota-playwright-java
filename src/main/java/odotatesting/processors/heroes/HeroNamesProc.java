@@ -38,7 +38,7 @@ public class HeroNamesProc {
 
             for (Locator row : heroRows) {
                 String heroName = row
-                        .locator(HeroesPageLocators.HERO_NAME_LOCATOR_RELATIVE)
+                        .locator(HeroesPageLocators.HERO_NAME_COLUMN_LOCATOR)
                         .textContent()
                         .toLowerCase();
 

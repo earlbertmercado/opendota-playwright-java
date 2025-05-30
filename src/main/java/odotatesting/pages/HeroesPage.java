@@ -1,7 +1,6 @@
 package odotatesting.pages;
 
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.ElementHandle;
 import com.microsoft.playwright.Locator;
 
 import odotatesting.base.BasePage;
@@ -31,6 +30,6 @@ public class HeroesPage extends BasePage {
     }
 
     public List<Locator> getHeroImages() {
-        return  page.locator(HeroesPageLocators.HERO_IMAGE).all();
+        return  page.locator(HeroesPageLocators.ALL_HERO_IMAGES).all();
     }
 }

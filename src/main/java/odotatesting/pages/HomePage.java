@@ -35,4 +35,9 @@ public class HomePage extends BasePage {
         page.click(NavigationBarLocators.HEROES_NAV_BAR);
         return new HeroesPage(page);
     }
+
+    public TeamsPage navigateToTeamsPage() {
+        page.click(NavigationBarLocators.TEAMS_NAV_BAR);
+        return new TeamsPage(page);
+    }
 }
