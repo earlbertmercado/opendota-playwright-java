@@ -124,18 +124,19 @@ public class HeroesProTableDataProc {
     /**
      * Collects all raw hero data lists from page locators.
      * It returns Map of list names to their extracted text contents.
+     * TODO: Modify this method to handle cases where locators are missing when Count values are 0.
      */
     private Map<String, List<String>> collectRawHeroData() {
         Map<String, List<String>> data = new LinkedHashMap<>();
-        data.put("heroNames", page.locator(HeroesPageLocators.HERO_NAME_LOCATOR_RELATIVE).allTextContents());
-        data.put("proPickPlusBanPercentage", page.locator(HeroesPageLocators.PRO_PICK_PLUS_BAN_PERCENTAGE).allTextContents());
-        data.put("proPickPlusBanCount", page.locator(HeroesPageLocators.PRO_PICK_PLUS_BAN_COUNT).allTextContents());
-        data.put("proPickPercentage", page.locator(HeroesPageLocators.PRO_PICK_PERCENTAGE).allTextContents());
-        data.put("proPickCount", page.locator(HeroesPageLocators.PRO_PICK_COUNT).allTextContents());
-        data.put("proBanPercentage", page.locator(HeroesPageLocators.PRO_BAN_PERCENTAGE).allTextContents());
-        data.put("proBanCount", page.locator(HeroesPageLocators.PRO_BAN_COUNT).allTextContents());
-        data.put("proWinPercentage", page.locator(HeroesPageLocators.PRO_WIN_PERCENTAGE).allTextContents());
-        data.put("proWinCount", page.locator(HeroesPageLocators.PRO_WIN_COUNT).allTextContents());
+        data.put("heroNames", page.locator(HeroesPageLocators.HERO_NAME_COLUMN_LOCATOR).allTextContents());
+        data.put("proPickPlusBanPercentage", page.locator(HeroesPageLocators.PRO_PICK_PLUS_BAN_PERCENTAGE_COLUMN).allTextContents());
+        data.put("proPickPlusBanCount", page.locator(HeroesPageLocators.PRO_PICK_PLUS_BAN_COUNT_COLUMN).allTextContents());
+        data.put("proPickPercentage", page.locator(HeroesPageLocators.PRO_PICK_PERCENTAGE_COLUMN).allTextContents());
+        data.put("proPickCount", page.locator(HeroesPageLocators.PRO_PICK_COUNT_COLUMN).allTextContents());
+        data.put("proBanPercentage", page.locator(HeroesPageLocators.PRO_BAN_PERCENTAGE_COLUMN).allTextContents());
+        data.put("proBanCount", page.locator(HeroesPageLocators.PRO_BAN_COUNT_COLUMN).allTextContents());
+        data.put("proWinPercentage", page.locator(HeroesPageLocators.PRO_WIN_PERCENTAGE_COLUMN).allTextContents());
+        data.put("proWinCount", page.locator(HeroesPageLocators.PRO_WIN_COUNT_COLUMN).allTextContents());
         return data;
     }
 
@@ -168,7 +169,7 @@ public class HeroesProTableDataProc {
 
     private void waitForHeroImagesToLoad() {
         try {
-            page.waitForSelector(HeroesPageLocators.PRO_PICK_PLUS_BAN_PERCENTAGE, new Page.WaitForSelectorOptions()
+            page.waitForSelector(HeroesPageLocators.PRO_PICK_PLUS_BAN_PERCENTAGE_COLUMN, new Page.WaitForSelectorOptions()
                     .setState(WaitForSelectorState.VISIBLE).setTimeout(WEB_ELEMENT_WAIT_TIMEOUT_MS));
             logger.debug("Hero stats table loaded.");
         } catch (Exception e) {
