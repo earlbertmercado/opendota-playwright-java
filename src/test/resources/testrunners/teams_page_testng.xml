@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Teams Page Test Suite" parallel="tests">
+    <test verbose="4" name="Teams Page Table Data Validation">
+        <classes>
+            <class name="odotatesting.tests.teams.TeamsTableDataTest">
+                <methods>
+                    <include name="testTeamsTableData"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
