@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Matches Page Test Suite" parallel="tests">
+
+    <listeners>
+        <listener class-name="odotatesting.listeners.ExtentReportListener"/>
+    </listeners>
+
     <test verbose="4" name="Matches Summary Validation">
         <classes>
-            <class name="odotatesting.tests.matches.MatchSummaryTest">
-            </class>
+            <class name="odotatesting.tests.matches.MatchSummaryTest"/>
         </classes>
     </test>
+
     <test verbose="4" name="Matches Overview Basic Statistics Validation">
         <classes>
-            <class name="odotatesting.tests.matches.OverviewBasicStatsTest">
-            </class>
+            <class name="odotatesting.tests.matches.OverviewBasicStatsTest"/>
         </classes>
     </test>
+
 </suite>

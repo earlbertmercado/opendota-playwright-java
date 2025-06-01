@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Heroes Page Test Suite" parallel="tests">
+
+    <listeners>
+        <listener class-name="odotatesting.listeners.ExtentReportListener"/>
+    </listeners>
+
     <test verbose="4" name="Heroes Count From Heroes Table Validation">
         <classes>
             <class name="odotatesting.tests.heroes.HeroesCountTest"/>
         </classes>
     </test>
+
     <test verbose="4" name="Heroes Page Pro Table Data Validation">
         <classes>
             <class name="odotatesting.tests.heroes.HeroesProTableDataTest"/>
         </classes>
     </test>
+
     <test verbose="4" name="Hero Images From Heroes Table Validation">
         <classes>
             <class name="odotatesting.tests.heroes.HeroImagesTest"/>
         </classes>
     </test>
+
     <test verbose="4" name="Hero Names From Heroes Table Validation">
         <classes>
             <class name="odotatesting.tests.heroes.HeroNamesTest"/>
         </classes>
     </test>
+
 </suite>
