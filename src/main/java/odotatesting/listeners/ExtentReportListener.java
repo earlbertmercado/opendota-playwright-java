@@ -1,77 +1,105 @@
 package odotatesting.listeners;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Properties;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
+import odotatesting.factory.PlaywrightFactory;
+import odotatesting.utils.InitializeProperties;
 
 public class ExtentReportListener implements ITestListener {
 
-    public ExtentSparkReporter sparkReporter;
-    public ExtentReports extentReports;
-    public ExtentTest extentTest;
+    private static final String OUTPUT_FOLDER = "./reports/";
+    private static final String FILE_NAME = "extent-report.html";
 
-    Properties properties = initializeProperties();
+    private static final Logger logger = LogManager.getLogger(ExtentReportListener.class);
 
-    @Override
-    public void onStart(ITestContext context) {
-        sparkReporter = new ExtentSparkReporter("./reports/extent-report.html");
-        sparkReporter.config().setDocumentTitle("Opendota Playwright Automated Testing Report");
+    public static ExtentReports extentReports = init();
+    public static ThreadLocal<ExtentTest> extentTestThread = new ThreadLocal<>();
+
+    private static ExtentReports init() {
+        Properties properties = InitializeProperties.loadProperties();
+        Path path = Paths.get(OUTPUT_FOLDER);
+        if (!Files.exists(path)) {
+            try {
+                Files.createDirectories(path);
+            }catch (IOException e) {
+                throw new RuntimeException("Couldn't create reports directory: " + e.getMessage(), e);
+            }
+        }
+
+        extentReports = new ExtentReports();
+        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(OUTPUT_FOLDER + FILE_NAME);
+
+        sparkReporter.config().setDocumentTitle("Opendota Playwright Automation Report");
         sparkReporter.config().setReportName("Test Results");
         sparkReporter.config().setTheme(Theme.DARK);
 
-        extentReports = new ExtentReports();
         extentReports.attachReporter(sparkReporter);
+        extentReports.setSystemInfo("OS", System.getProperty("os.name"));
+        extentReports.setSystemInfo("Browser", properties.getProperty("browser"));
+        extentReports.setSystemInfo("Headless", properties.getProperty("headless"));
+
+        return extentReports;
+
+    }
+
+    @Override
+    public void onStart(ITestContext context) {
+        logger.info("===========Test=Execution=Started============");
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        extentReports.setSystemInfo("OS", System.getProperty("os.name"));
-        extentReports.setSystemInfo("Browser", properties.getProperty("browser"));
+        ExtentTest test = extentReports.createTest(result.getMethod().getMethodName());
+        extentTestThread.set(test);
+        logger.info("Test started: {}", result.getMethod().getMethodName());
     }
 
+    @Override
     public void onTestSuccess(ITestResult result) {
-        extentTest = extentReports.createTest(result.getMethod().getMethodName());
-        extentTest.log(Status.PASS,"Test passed " + result.getMethod().getMethodName());
+        extentTestThread.get().log(Status.PASS,"Test passed: " + result.getMethod().getMethodName());
+        logger.info("Test passed: {}", result.getMethod().getMethodName());
     }
 
+    @Override
     public void onTestFailure(ITestResult result) {
-        extentTest = extentReports.createTest(result.getMethod().getMethodName());
-        extentTest.log(Status.FAIL, "Test failed: " + result.getMethod().getMethodName());
-        extentTest.log(Status.FAIL, result.getThrowable().getMessage());
-        extentTest.log(Status.FAIL, result.getThrowable());
+        logger.error("Test failed: {}", result.getMethod().getMethodName());
+        ExtentTest currentTest = extentTestThread.get();
+        currentTest.log(Status.FAIL, "Test failed: " + result.getMethod().getMethodName());
+        currentTest.log(Status.FAIL, result.getThrowable().getMessage());
+        currentTest.log(Status.FAIL, result.getThrowable());
+
+        PlaywrightFactory factory = PlaywrightFactory.getFactoryInstance();
+        String scenarioName = result.getMethod().getMethodName();
+
+        String screenshotPath = factory.takeScreenshot(scenarioName);
+        currentTest.fail("Screenshot: ", MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
     }
 
+    @Override
     public void onTestSkipped(ITestResult result) {
-        extentTest = extentReports.createTest(result.getMethod().getMethodName());
-        extentTest.log(Status.SKIP, "Test skipped: " + result.getMethod().getMethodName());
-        extentTest.log(Status.INFO, result.getThrowable().getMessage());
+        extentTestThread.get().log(Status.SKIP, "Test skipped: " + result.getMethod().getMethodName());
+        extentTestThread.get().log(Status.INFO, result.getThrowable());
     }
 
+    @Override
     public void onFinish(ITestContext context) {
         extentReports.flush();
+        logger.info("===========Test=Execution=Finished===========");
     }
-
-    //can be moved to utility package
-    public Properties initializeProperties() {
-        try {
-            FileInputStream input = new FileInputStream("./src/test/resources/config/config.properties");
-            properties = new Properties();
-            properties.load(input);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return properties;
-    }
-
 }
