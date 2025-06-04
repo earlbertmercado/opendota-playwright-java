@@ -25,12 +25,11 @@ public class HeroImagesProc {
      * Checks if all hero images on the Heroes page are loaded correctly.
      * It verifies that each image is visible and has a non-zero natural width.
      *
-     * @param heroesPage The HeroesPage object containing the page context.
      * @return true if all hero images are loaded correctly, false otherwise.
      */
-    public boolean areAllHeroImagesLoaded(HeroesPage heroesPage) {
+    public boolean areAllHeroImagesLoaded() {
         waitForHeroImagesToLoad();
-
+        HeroesPage heroesPage = new HeroesPage(page);
         List<Locator> heroImages = heroesPage.getHeroImages();
 
         if (heroImages.isEmpty()) {

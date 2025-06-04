@@ -13,7 +13,7 @@ import odotatesting.pages.MatchesPage;
 public class MatchSummaryProc {
 
     private static final Logger logger = LogManager.getLogger(MatchSummaryProc.class);
-     private final Page page;
+    private final Page page;
 
     public MatchSummaryProc(Page page) {
         this.page = page;
@@ -64,8 +64,8 @@ public class MatchSummaryProc {
      * Keys: "winner", "radiantKills", "direKills", "matchDurationInSec".
      * Sample map returned: {"winner":"Radiant", "radiantKills":"36", "direKills":"47", "matchDurationInSec":2712}.
      */
-    public Map<String, Object> getMatchSummaryFromWeb(MatchesPage matchesPage) {
-
+    public Map<String, Object> getMatchSummaryFromWeb() {
+        MatchesPage matchesPage = new MatchesPage(page);
         Map<String, Object> matchSummary = new HashMap<>();
 
         matchSummary.put("winner", matchesPage.getWinnerTeam());

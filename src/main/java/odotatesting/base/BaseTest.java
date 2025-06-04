@@ -11,7 +11,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 
 import odotatesting.factory.PlaywrightFactory;
-import odotatesting.pages.HomePage;
+import odotatesting.pages.HeroesPage;
+import odotatesting.pages.MatchesPage;
+import odotatesting.pages.TeamsPage;
 import odotatesting.utils.InitializeProperties;
 
 public abstract class BaseTest {
@@ -21,7 +23,7 @@ public abstract class BaseTest {
     protected PlaywrightFactory pf;
     protected Page page;
     protected Properties properties;
-    protected HomePage homePage;
+    protected BasePage basePageInstance;
 
     @AfterMethod
     public void printUrl() {
@@ -44,7 +46,7 @@ public abstract class BaseTest {
             if (page == null) {
                 throw new RuntimeException("Setup failed: Browser not launched.");
             }
-            homePage = new HomePage(page);
+            basePageInstance = new BasePage(page);
         }catch (PlaywrightException e) {
             throw new RuntimeException("Playwright setup failed.");
         }
@@ -55,5 +57,18 @@ public abstract class BaseTest {
         if (page != null && page.context() != null && page.context().browser() != null) {
             pf.closeBrowser();
         }
+    }
+
+    // Helper methods to access common page object operations
+    protected MatchesPage navigateToMatchesPage() {
+        return basePageInstance.navigateToMatchesPage();
+    }
+
+    protected HeroesPage navigateToHeroesPage() {
+        return basePageInstance.navigateToHeroesPage();
+    }
+
+    protected TeamsPage navigateToTeamsPage() {
+        return basePageInstance.navigateToTeamsPage();
     }
 }

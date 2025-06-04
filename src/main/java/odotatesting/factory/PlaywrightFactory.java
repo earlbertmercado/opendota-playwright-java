@@ -70,7 +70,7 @@ public class PlaywrightFactory {
         }
 
         Browser.NewContextOptions contextOptions = new Browser.NewContextOptions();
-        contextOptions.setViewportSize(1499, 1000);
+        contextOptions.setViewportSize(null);   //null = fullscreen
 
         browserContext = browser.newContext(contextOptions);
         Page currentPage = browserContext.newPage();
