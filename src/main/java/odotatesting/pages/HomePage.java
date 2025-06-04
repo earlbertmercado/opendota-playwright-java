@@ -3,6 +3,7 @@ package odotatesting.pages;
 import com.microsoft.playwright.Page;
 
 import odotatesting.base.BasePage;
+import odotatesting.constants.BurgerMenuLocators;
 import odotatesting.constants.NavigationBarLocators;
 
 public class HomePage extends BasePage {
@@ -37,7 +38,21 @@ public class HomePage extends BasePage {
     }
 
     public TeamsPage navigateToTeamsPage() {
-        page.click(NavigationBarLocators.TEAMS_NAV_BAR);
+        //implement this in other navigation methods as well
+        final int BURGER_MENU_APPEAR_THRESHOLD = 1500;
+
+        boolean isBurgerMenuVisible = (int)page.evaluate("() => window.innerWidth") < BURGER_MENU_APPEAR_THRESHOLD;
+
+        if (isBurgerMenuVisible) {
+            clickBurgerMenu();
+            page.click(BurgerMenuLocators.TEAMS);
+        }else{
+            page.click(NavigationBarLocators.TEAMS_NAV_BAR);
+        }
         return new TeamsPage(page);
+    }
+
+    public void clickBurgerMenu() {
+        page.click(NavigationBarLocators.BURGER_MENU);
     }
 }
