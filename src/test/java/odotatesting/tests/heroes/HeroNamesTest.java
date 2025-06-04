@@ -25,7 +25,6 @@ public class HeroNamesTest extends BaseTest {
         heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
 
         heroNames = new HeroNamesProc(heroesPage.getPage());
-        logger.info("URL: {}", heroesPage.getPageURL());
     }
 
     @Test
@@ -39,6 +38,6 @@ public class HeroNamesTest extends BaseTest {
                 .isNotEmpty()
                 .isEqualTo(heroNamesFromAPI);
 
-        logger.info("{} completed successfully.", this.getClass().getSimpleName());
+        logger.info("{} validation finished.", this.getClass().getSimpleName());
     }
 }

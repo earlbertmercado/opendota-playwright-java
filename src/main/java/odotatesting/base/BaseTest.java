@@ -7,6 +7,7 @@ import com.microsoft.playwright.PlaywrightException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 
 import odotatesting.factory.PlaywrightFactory;
@@ -21,6 +22,15 @@ public abstract class BaseTest {
     protected Page page;
     protected Properties properties;
     protected HomePage homePage;
+
+    @AfterMethod
+    public void printUrl() {
+        if (page != null) {
+            logger.info("URL: {}", page.url());
+        } else {
+            logger.warn("Page is not initialized, cannot display URL.");
+        }
+    }
 
     @BeforeClass
     public void setupBrowserAndPages() {

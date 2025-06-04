@@ -23,7 +23,6 @@ public class HeroImagesTest extends BaseTest {
         heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
 
         heroImages = new HeroImagesProc(heroesPage.getPage());
-        logger.info("URL: {}", heroesPage.getPageURL());
     }
 
     @Test
@@ -34,6 +33,6 @@ public class HeroImagesTest extends BaseTest {
                 .as("Check if all hero images are loaded")
                 .isTrue();
 
-        logger.info("{} completed successfully.", this.getClass().getSimpleName());
+        logger.info("{} validation finished.", this.getClass().getSimpleName());
     }
 }

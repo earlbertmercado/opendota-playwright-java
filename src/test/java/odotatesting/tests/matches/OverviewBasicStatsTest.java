@@ -41,7 +41,6 @@ public class OverviewBasicStatsTest extends BaseTest {
                 .clickMatchesOverview();
 
         overviewBasicStatsProc = new OverviewBasicStatsProc(matchesPage.getPage());
-        logger.info("URL: {}", matchesPage.getPageURL());
     }
 
     @Test
@@ -68,6 +67,6 @@ public class OverviewBasicStatsTest extends BaseTest {
                 .isNotNull()
                 .isEqualTo(direStatsFromAPI);
 
-        logger.info("{} completed successfully.", this.getClass().getSimpleName());
+        logger.info("{} validation finished.", this.getClass().getSimpleName());
     }
 }

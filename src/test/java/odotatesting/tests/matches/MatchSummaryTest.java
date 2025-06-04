@@ -33,7 +33,6 @@ public class MatchSummaryTest extends BaseTest {
                 .clickMatchesOverview();
 
         matchSummary = new MatchSummaryProc(matchesPage.getPage());
-        logger.info("URL: {}", matchesPage.getPageURL());
     }
 
     @Test
@@ -49,6 +48,6 @@ public class MatchSummaryTest extends BaseTest {
                 .isNotNull()
                 .isEqualTo(matchSummaryDataFromAPI);
 
-        logger.info("{} completed successfully.", this.getClass().getSimpleName());
+        logger.info("{} validation finished.", this.getClass().getSimpleName());
     }
 }
