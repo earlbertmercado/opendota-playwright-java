@@ -20,7 +20,6 @@ public class TeamsTableDataTest extends BaseTest {
         teamsPage = homePage.navigateToTeamsPage();
 
         teamsTableDataProc = new TeamsTableDataProc(teamsPage.getPage());
-        logger.info("URL: {}", teamsPage.getPageURL());
     }
 
     @Test
@@ -29,6 +28,6 @@ public class TeamsTableDataTest extends BaseTest {
         assertThat(teamTableHasNoInvalidData)
                 .as("Check if teams table data has invalid data")
                 .isTrue();
-        logger.info("{} completed successfully.", this.getClass().getSimpleName());
+        logger.info("{} validation finished.", this.getClass().getSimpleName());
     }
 }

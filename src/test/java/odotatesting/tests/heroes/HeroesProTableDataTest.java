@@ -25,7 +25,6 @@ public class HeroesProTableDataTest extends BaseTest {
         heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
 
         heroesTableDataProc = new HeroesProTableDataProc(heroesPage.getPage());
-        logger.info("URL: {}", heroesPage.getPageURL());
     }
 
     @Test
@@ -39,6 +38,6 @@ public class HeroesProTableDataTest extends BaseTest {
                 .as("Check if heroes table data is valid")
                 .isTrue();
 
-        logger.info("{} completed successfully.", this.getClass().getSimpleName());
+        logger.info("{} validation finished.", this.getClass().getSimpleName());
     }
 }

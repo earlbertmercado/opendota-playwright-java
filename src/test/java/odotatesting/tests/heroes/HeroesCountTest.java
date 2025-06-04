@@ -23,7 +23,6 @@ public class HeroesCountTest extends BaseTest {
         heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
 
         heroesCount = new HeroesCountProc(heroesPage.getPage());
-        logger.info("URL: {}", heroesPage.getPageURL());
     }
 
     @Test
@@ -37,6 +36,6 @@ public class HeroesCountTest extends BaseTest {
                 .isNotNull()
                 .isEqualTo(heroesCountFromAPI);
 
-        logger.info("{} completed successfully.", this.getClass().getSimpleName());
+        logger.info("{} validation finished.", this.getClass().getSimpleName());
     }
 }
