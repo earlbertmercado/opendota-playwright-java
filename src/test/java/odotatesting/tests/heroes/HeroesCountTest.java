@@ -20,8 +20,7 @@ public class HeroesCountTest extends BaseTest {
 
     @BeforeMethod
     public void goToHeroesPage() {
-        heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
-
+        heroesPage = navigateToHeroesPage().clickProfessionalTab();
         heroesCount = new HeroesCountProc(heroesPage.getPage());
     }
 

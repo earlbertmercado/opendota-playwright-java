@@ -17,8 +17,8 @@ public class TeamsTableDataTest extends BaseTest {
 
     @BeforeMethod
     public void goToTeamsPage() {
-        teamsPage = homePage.navigateToTeamsPage();
-
+//        teamsPage = homePage.navigateToTeamsPage();
+        teamsPage = navigateToTeamsPage();
         teamsTableDataProc = new TeamsTableDataProc(teamsPage.getPage());
     }
 

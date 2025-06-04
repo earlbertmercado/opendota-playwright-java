@@ -34,8 +34,7 @@ public class OverviewBasicStatsTest extends BaseTest {
 
     @BeforeMethod
     public void findMatch() {
-        matchesPage = homePage
-                .navigateToMatchesPage()
+        matchesPage = navigateToMatchesPage()
                 .clickTopPublicTab()
                 .clickFirstTopPubMatchOnList()
                 .clickMatchesOverview();

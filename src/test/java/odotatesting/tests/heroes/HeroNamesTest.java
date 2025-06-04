@@ -22,8 +22,7 @@ public class HeroNamesTest extends BaseTest {
 
     @BeforeMethod
     public void goToHeroesPage() {
-        heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
-
+        heroesPage = navigateToHeroesPage().clickProfessionalTab();
         heroNames = new HeroNamesProc(heroesPage.getPage());
     }
 

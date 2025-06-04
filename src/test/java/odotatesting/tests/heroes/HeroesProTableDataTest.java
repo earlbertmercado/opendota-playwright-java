@@ -22,8 +22,7 @@ public class HeroesProTableDataTest extends BaseTest {
 
     @BeforeMethod
     public void goToHeroesPage() {
-        heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
-
+        heroesPage = navigateToHeroesPage().clickProfessionalTab();
         heroesTableDataProc = new HeroesProTableDataProc(heroesPage.getPage());
     }
 

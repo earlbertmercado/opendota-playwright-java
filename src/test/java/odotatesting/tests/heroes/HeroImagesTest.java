@@ -20,14 +20,13 @@ public class HeroImagesTest extends BaseTest {
 
     @BeforeMethod
     public void goToHeroesPage() {
-        heroesPage = homePage.navigateToHeroesPage().clickProfessionalTab();
-
+        heroesPage = navigateToHeroesPage().clickProfessionalTab();
         heroImages = new HeroImagesProc(heroesPage.getPage());
     }
 
     @Test
     public void testHeroImages() {
-        boolean allImagesLoaded = heroImages.areAllHeroImagesLoaded(heroesPage);
+        boolean allImagesLoaded = heroImages.areAllHeroImagesLoaded();
 
         assertThat(allImagesLoaded)
                 .as("Check if all hero images are loaded")

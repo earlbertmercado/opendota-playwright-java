@@ -26,12 +26,10 @@ public class MatchSummaryTest extends BaseTest {
 
     @BeforeMethod
     public void findMatch() {
-        matchesPage = homePage
-                .navigateToMatchesPage()
+        matchesPage = navigateToMatchesPage()
                 .clickTopPublicTab()
                 .clickFirstTopPubMatchOnList()
                 .clickMatchesOverview();
-
         matchSummary = new MatchSummaryProc(matchesPage.getPage());
     }
 
@@ -40,7 +38,7 @@ public class MatchSummaryTest extends BaseTest {
         logger.info("Match ID: {}", matchesPage.getMatchId());
         JSONObject matchDetailsFromAPI = CallOpendotaAPI.matches(matchesPage.getMatchId());
 
-        Map<String, Object> matchSummaryDataFromWeb = matchSummary.getMatchSummaryFromWeb(matchesPage);
+        Map<String, Object> matchSummaryDataFromWeb = matchSummary.getMatchSummaryFromWeb();
         Map<String, Object> matchSummaryDataFromAPI = matchSummary.getMatchSummaryFromAPI(matchDetailsFromAPI);
 
         assertThat(matchSummaryDataFromWeb)
