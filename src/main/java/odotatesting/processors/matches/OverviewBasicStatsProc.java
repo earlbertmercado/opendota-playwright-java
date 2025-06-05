@@ -116,7 +116,7 @@ public class OverviewBasicStatsProc {
             allPlayerStats.add(playerStats);
         }
         String jsonOutput = JsonOutput.prettyPrint(JsonOutput.toJson(allPlayerStats));
-        logger.info("Extracted Data From Web - {}", jsonOutput);
+        //  logger.info("Extracted Data From Web - {}", jsonOutput);
         return jsonOutput;
     }
 
@@ -163,7 +163,7 @@ public class OverviewBasicStatsProc {
             extractedStatsFromAPI.add(playerStatsMap);
         }
         String jsonOutput = JsonOutput.prettyPrint(JsonOutput.toJson(extractedStatsFromAPI));
-        logger.info("Extracted Data From API - {}", jsonOutput);
+        //  logger.info("Extracted Data From API - {}", jsonOutput);
         return jsonOutput;
     }
 }

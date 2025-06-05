@@ -1,20 +1,24 @@
 package odotatesting.base;
 
 import java.util.Properties;
+import java.util.UUID;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.PlaywrightException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 
 import odotatesting.factory.PlaywrightFactory;
 import odotatesting.pages.HeroesPage;
 import odotatesting.pages.MatchesPage;
 import odotatesting.pages.TeamsPage;
 import odotatesting.utils.InitializeProperties;
+
 
 public abstract class BaseTest {
 
@@ -32,6 +36,12 @@ public abstract class BaseTest {
         } else {
             logger.warn("Page is not initialized, cannot display URL.");
         }
+    }
+
+    @BeforeTest
+    public void setupLogging() {
+        String executionId = UUID.randomUUID().toString();
+        ThreadContext.put("executionId", executionId);
     }
 
     @BeforeClass

@@ -48,11 +48,11 @@ public class OverviewBasicStatsTest extends BaseTest {
 
         JSONObject matchesAPI = CallOpendotaAPI.matches(matchesPage.getMatchId());
 
-        logger.info("RADIANT TEAM");
+        //  logger.info("RADIANT TEAM");
         String radiantStatsFromWeb = overviewBasicStatsProc.extractMatchStatsFromWeb(STAT_KEYS, "Radiant");
         String radiantStatsFromAPI = overviewBasicStatsProc.extractMatchStatsFromAPI(matchesAPI, "Radiant");
 
-        logger.info("DIRE TEAM");
+        //  logger.info("DIRE TEAM");
         String direStatsFromWeb = overviewBasicStatsProc.extractMatchStatsFromWeb(STAT_KEYS, "Dire");
         String direStatsFromAPI = overviewBasicStatsProc.extractMatchStatsFromAPI(matchesAPI, "Dire");
 

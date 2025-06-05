@@ -10,7 +10,7 @@
                      filePattern="${basePath}/opendotatesting-%d{yyyy-MM-dd}.log"
                      append="true">
             <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</pattern>
+                <pattern>[%X{executionId}] %d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %c{1}:%L - %msg%n</pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
