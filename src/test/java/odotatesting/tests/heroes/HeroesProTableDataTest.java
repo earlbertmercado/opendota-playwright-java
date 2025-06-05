@@ -28,8 +28,8 @@ public class HeroesProTableDataTest extends BaseTest {
 
     @Test
     public void testHeroesTableData() {
-        String heroStatsFromTable = heroesTableDataProc.getHeroStatsAsJson();
-        logger.info("Hero stats from table: {}", heroStatsFromTable);
+        //  String heroStatsFromTable = heroesTableDataProc.getHeroStatsAsJson();
+        //  logger.info("Hero stats from table: {}", heroStatsFromTable);
 
         boolean doesTableContainValidData = heroesTableDataProc.doesTableContainValidData();
 

@@ -82,8 +82,8 @@ public class HeroImagesProc {
                         index, src, isVisible, naturalWidth);
                 return false;
             } else {
-                logger.debug("Image [{}] OK: src='{}', visible={}, width={}",
-                        index, src, isVisible, naturalWidth);
+//                logger.debug("Image [{}] OK: src='{}', visible={}, width={}",
+//                        index, src, isVisible, naturalWidth);
                 return true;
             }
         } catch (Exception e) {

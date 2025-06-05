@@ -45,7 +45,7 @@ public class TeamsTableDataProc {
                     teamNames.size(), ratings.size(), wins.size(), losses.size());
             return false;
         }
-        createJsonArrayFromColumnData();
+        //  createJsonArrayFromColumnData();
         logger.info("All team table columns validated successfully.");
         return true;
     }
@@ -105,7 +105,7 @@ public class TeamsTableDataProc {
                 teamDetails.put("wins", Integer.parseInt(wins.get(i).trim()));
                 teamDetails.put("losses", Integer.parseInt(losses.get(i).trim()));
             } catch (NumberFormatException e) {
-                System.err.println("Error parsing number for team " + teamNames.get(i) + ": " + e.getMessage());
+                logger.error("Error parsing number for team {}", teamNames.get(i), e);
                 continue;
             }
             JSONObject teamEntry = new JSONObject();
@@ -113,6 +113,6 @@ public class TeamsTableDataProc {
 
             jsonArray.put(teamEntry);
         }
-        logger.info(jsonArray.toString(2));
+        //  logger.info(jsonArray.toString(2));
     }
 }
