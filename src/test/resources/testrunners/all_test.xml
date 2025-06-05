@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="FullTestExecutionSuite">
+    <suite-files>
+        <suite-file path="heroes_page_testng.xml" />
+        <suite-file path="matches_page_testng.xml" />
+        <suite-file path="teams_page_testng.xml" />
+    </suite-files>
+</suite>
