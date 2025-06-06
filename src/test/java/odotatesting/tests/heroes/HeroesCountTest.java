@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 
 import odotatesting.base.BaseTest;
 import odotatesting.pages.HeroesPage;
-import odotatesting.processors.heroes.HeroesCountProc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,19 +15,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HeroesCountTest extends BaseTest {
 
     private HeroesPage heroesPage;
-    HeroesCountProc heroesCount;
 
     @BeforeMethod
     public void goToHeroesPage() {
         heroesPage = navigateToHeroesPage().clickProfessionalTab();
-        heroesCount = new HeroesCountProc(heroesPage.getPage());
     }
 
     @Test
     public void testHeroesCount() {
-
-        int heroesCountFromWeb = heroesCount.getHeroesCountFromWeb();
-        int heroesCountFromAPI = heroesCount.getHeroesCountFromAPI();
+        int heroesCountFromWeb = heroesPage.getHeroesCountFromWeb();
+        int heroesCountFromAPI = heroesPage.getHeroesCountFromAPI();
 
         assertThat(heroesCountFromWeb)
                 .as("Number of heroes in the table")

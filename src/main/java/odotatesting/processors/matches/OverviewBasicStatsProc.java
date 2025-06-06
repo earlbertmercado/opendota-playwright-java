@@ -125,7 +125,7 @@ public class OverviewBasicStatsProc {
      * API response. Return A JSON formatted string containing the match stats for the
      * specified team.
      */
-    public static String extractMatchStatsFromAPI(JSONObject matchDetails, String team) {
+    public String extractMatchStatsFromAPI(JSONObject matchDetails, String team) {
         List<Map<String, Object>> extractedStatsFromAPI = new ArrayList<>();
         JSONArray playersArray = matchDetails.optJSONArray("players");
 
