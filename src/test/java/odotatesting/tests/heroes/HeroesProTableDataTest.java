@@ -1,6 +1,5 @@
 package odotatesting.tests.heroes;
 
-import odotatesting.processors.heroes.HeroesProTableDataProc;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -18,20 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HeroesProTableDataTest extends BaseTest {
 
     private HeroesPage heroesPage;
-    HeroesProTableDataProc heroesTableDataProc;
 
     @BeforeMethod
     public void goToHeroesPage() {
         heroesPage = navigateToHeroesPage().clickProfessionalTab();
-        heroesTableDataProc = new HeroesProTableDataProc(heroesPage.getPage());
     }
 
     @Test
     public void testHeroesTableData() {
-        //  String heroStatsFromTable = heroesTableDataProc.getHeroStatsAsJson();
-        //  logger.info("Hero stats from table: {}", heroStatsFromTable);
-
-        boolean doesTableContainValidData = heroesTableDataProc.doesTableContainValidData();
+        boolean doesTableContainValidData = heroesPage.validateHeroesProTableData();
 
         assertThat(doesTableContainValidData)
                 .as("Check if heroes table data is valid")

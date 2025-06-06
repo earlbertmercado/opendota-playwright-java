@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 
 import odotatesting.base.BaseTest;
 import odotatesting.pages.MatchesPage;
-import odotatesting.processors.matches.MatchSummaryProc;
 import odotatesting.utils.CallOpendotaAPI;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MatchSummaryTest extends BaseTest {
 
     private MatchesPage matchesPage;
-    MatchSummaryProc matchSummary;
 
     @BeforeMethod
     public void findMatch() {
@@ -30,7 +28,6 @@ public class MatchSummaryTest extends BaseTest {
                 .clickTopPublicTab()
                 .clickFirstTopPubMatchOnList()
                 .clickMatchesOverview();
-        matchSummary = new MatchSummaryProc(matchesPage.getPage());
     }
 
     @Test
@@ -38,8 +35,8 @@ public class MatchSummaryTest extends BaseTest {
         logger.info("Match ID: {}", matchesPage.getMatchId());
         JSONObject matchDetailsFromAPI = CallOpendotaAPI.matches(matchesPage.getMatchId());
 
-        Map<String, Object> matchSummaryDataFromWeb = matchSummary.getMatchSummaryFromWeb();
-        Map<String, Object> matchSummaryDataFromAPI = matchSummary.getMatchSummaryFromAPI(matchDetailsFromAPI);
+        Map<String, Object> matchSummaryDataFromWeb = matchesPage.getMatchSummaryFromWeb();
+        Map<String, Object> matchSummaryDataFromAPI = matchesPage.getMatchSummaryFromAPI(matchDetailsFromAPI);
 
         assertThat(matchSummaryDataFromWeb)
                 .as("Match summary data from web")

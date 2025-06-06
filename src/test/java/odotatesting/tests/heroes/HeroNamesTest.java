@@ -7,7 +7,6 @@ import org.testng.annotations.Test;
 
 import odotatesting.base.BaseTest;
 import odotatesting.pages.HeroesPage;
-import odotatesting.processors.heroes.HeroNamesProc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,18 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HeroNamesTest extends BaseTest {
 
     private HeroesPage heroesPage;
-    HeroNamesProc heroNames;
 
     @BeforeMethod
     public void goToHeroesPage() {
         heroesPage = navigateToHeroesPage().clickProfessionalTab();
-        heroNames = new HeroNamesProc(heroesPage.getPage());
     }
 
     @Test
     public void testHeroNames() {
-        List<String> heroNamesFromWeb = heroNames.getHeroListFromWeb();
-        List<String> heroNamesFromAPI = heroNames.getHeroListFromAPI();
+        List<String> heroNamesFromWeb = heroesPage.getHeroNamesFromWeb();
+        List<String> heroNamesFromAPI = heroesPage.getHeroNamesFromAPI();
 
         assertThat(heroNamesFromWeb)
                 .as("List of hero names from the web")

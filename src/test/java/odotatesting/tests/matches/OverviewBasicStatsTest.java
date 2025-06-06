@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 
 import odotatesting.base.BaseTest;
 import odotatesting.pages.MatchesPage;
-import odotatesting.processors.matches.OverviewBasicStatsProc;
 import odotatesting.utils.CallOpendotaAPI;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OverviewBasicStatsTest extends BaseTest {
 
     private MatchesPage matchesPage;
-    private OverviewBasicStatsProc overviewBasicStatsProc;
 
     private static final List<String> STAT_KEYS = Arrays.asList(
             "level", "kills", "deaths", "assists", "last_hits", "denies",
@@ -38,8 +36,6 @@ public class OverviewBasicStatsTest extends BaseTest {
                 .clickTopPublicTab()
                 .clickFirstTopPubMatchOnList()
                 .clickMatchesOverview();
-
-        overviewBasicStatsProc = new OverviewBasicStatsProc(matchesPage.getPage());
     }
 
     @Test
@@ -49,12 +45,12 @@ public class OverviewBasicStatsTest extends BaseTest {
         JSONObject matchesAPI = CallOpendotaAPI.matches(matchesPage.getMatchId());
 
         //  logger.info("RADIANT TEAM");
-        String radiantStatsFromWeb = overviewBasicStatsProc.extractMatchStatsFromWeb(STAT_KEYS, "Radiant");
-        String radiantStatsFromAPI = overviewBasicStatsProc.extractMatchStatsFromAPI(matchesAPI, "Radiant");
+        String radiantStatsFromWeb = matchesPage.extractMatchStatsFromWeb(STAT_KEYS, "Radiant");
+        String radiantStatsFromAPI = matchesPage.extractMatchStatsFromAPI(matchesAPI, "Radiant");
 
         //  logger.info("DIRE TEAM");
-        String direStatsFromWeb = overviewBasicStatsProc.extractMatchStatsFromWeb(STAT_KEYS, "Dire");
-        String direStatsFromAPI = overviewBasicStatsProc.extractMatchStatsFromAPI(matchesAPI, "Dire");
+        String direStatsFromWeb = matchesPage.extractMatchStatsFromWeb(STAT_KEYS, "Dire");
+        String direStatsFromAPI = matchesPage.extractMatchStatsFromAPI(matchesAPI, "Dire");
 
         assertThat(radiantStatsFromWeb)
                 .as("Radiant stats from web")

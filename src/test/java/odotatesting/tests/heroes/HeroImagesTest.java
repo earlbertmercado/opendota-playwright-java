@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 
 import odotatesting.base.BaseTest;
 import odotatesting.pages.HeroesPage;
-import odotatesting.processors.heroes.HeroImagesProc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,17 +15,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HeroImagesTest extends BaseTest {
 
     private HeroesPage heroesPage;
-    HeroImagesProc heroImages;
 
     @BeforeMethod
     public void goToHeroesPage() {
         heroesPage = navigateToHeroesPage().clickProfessionalTab();
-        heroImages = new HeroImagesProc(heroesPage.getPage());
     }
 
     @Test
     public void testHeroImages() {
-        boolean allImagesLoaded = heroImages.areAllHeroImagesLoaded();
+        boolean allImagesLoaded = heroesPage.areAllHeroImagesLoaded();
 
         assertThat(allImagesLoaded)
                 .as("Check if all hero images are loaded")

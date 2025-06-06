@@ -1,14 +1,26 @@
 package odotatesting.pages;
 
 import com.microsoft.playwright.Page;
+import org.json.JSONObject;
 
 import odotatesting.base.BasePage;
 import odotatesting.constants.MatchesPageLocators;
+import odotatesting.processors.matches.MatchSummaryProc;
+import odotatesting.processors.matches.OverviewBasicStatsProc;
+
+import java.util.List;
+import java.util.Map;
 
 public class MatchesPage extends BasePage {
 
+    private final MatchSummaryProc matchSummaryProc;
+    private final OverviewBasicStatsProc overviewBasicStatsProc;
+
     public MatchesPage(Page page) {
         super(page);
+
+        this.matchSummaryProc = new MatchSummaryProc(page);
+        this.overviewBasicStatsProc = new OverviewBasicStatsProc(page);
     }
 
     public MatchesPage clickTopPublicTab() {
@@ -45,4 +57,23 @@ public class MatchesPage extends BasePage {
     public String getMatchDuration() {
         return page.textContent(MatchesPageLocators.MATCH_DURATION);
     }
+
+    // The following methods are from processor classes.
+
+    public Map<String, Object> getMatchSummaryFromWeb() {
+        return matchSummaryProc.getMatchSummaryFromWeb();
+    }
+
+    public Map<String, Object> getMatchSummaryFromAPI(JSONObject matchDetailsFromAPI) {
+        return matchSummaryProc.getMatchSummaryFromAPI(matchDetailsFromAPI);
+    }
+
+    public String extractMatchStatsFromWeb(List<String> statKeys, String team) {
+        return overviewBasicStatsProc.extractMatchStatsFromWeb(statKeys, team);
+    }
+
+    public String extractMatchStatsFromAPI(JSONObject matchDetails, String team) {
+        return overviewBasicStatsProc.extractMatchStatsFromAPI(matchDetails, team);
+    }
+
 }
