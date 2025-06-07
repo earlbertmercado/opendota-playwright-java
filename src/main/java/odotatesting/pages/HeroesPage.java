@@ -14,15 +14,17 @@ import odotatesting.processors.heroes.HeroesProTableDataProc;
 
 public class HeroesPage extends BasePage {
 
-    private final HeroesCountProc heroesCountProc;
-    private final HeroesProTableDataProc heroesProTableDataProc;
-    private final HeroImagesProc heroImagesProc;
-    private final HeroNamesProc heroNamesProc;
-
+    private HeroesCountProc heroesCountProc;
+    private HeroesProTableDataProc heroesProTableDataProc;
+    private HeroImagesProc heroImagesProc;
+    private HeroNamesProc heroNamesProc;
 
     public HeroesPage(Page page) {
         super(page);
+        initializeProcessors(page);
+    }
 
+    private void initializeProcessors(Page page) {
         this.heroesCountProc = new HeroesCountProc(page);
         this.heroesProTableDataProc = new HeroesProTableDataProc(page);
         this.heroImagesProc = new HeroImagesProc(page);
@@ -47,8 +49,6 @@ public class HeroesPage extends BasePage {
     public List<Locator> getHeroImages() {
         return  page.locator(HeroesPageLocators.ALL_HERO_IMAGES).all();
     }
-
-    // The following methods are from processor classes.
 
     public Integer getHeroesCountFromWeb() {
         return heroesCountProc.getHeroesCountFromWeb();

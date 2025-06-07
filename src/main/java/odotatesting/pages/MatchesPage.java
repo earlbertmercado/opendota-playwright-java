@@ -13,12 +13,15 @@ import java.util.Map;
 
 public class MatchesPage extends BasePage {
 
-    private final MatchSummaryProc matchSummaryProc;
-    private final OverviewBasicStatsProc overviewBasicStatsProc;
+    private MatchSummaryProc matchSummaryProc;
+    private OverviewBasicStatsProc overviewBasicStatsProc;
 
     public MatchesPage(Page page) {
         super(page);
+        initializeProcessors(page);
+    }
 
+    public void initializeProcessors(Page page) {
         this.matchSummaryProc = new MatchSummaryProc(page);
         this.overviewBasicStatsProc = new OverviewBasicStatsProc(page);
     }
@@ -57,8 +60,6 @@ public class MatchesPage extends BasePage {
     public String getMatchDuration() {
         return page.textContent(MatchesPageLocators.MATCH_DURATION);
     }
-
-    // The following methods are from processor classes.
 
     public Map<String, Object> getMatchSummaryFromWeb() {
         return matchSummaryProc.getMatchSummaryFromWeb();
