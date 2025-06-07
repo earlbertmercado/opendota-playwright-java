@@ -1,5 +1,8 @@
 package odotatesting.pages;
 
+import java.util.List;
+import java.util.Map;
+
 import com.microsoft.playwright.Page;
 import org.json.JSONObject;
 
@@ -7,9 +10,6 @@ import odotatesting.base.BasePage;
 import odotatesting.constants.MatchesPageLocators;
 import odotatesting.processors.matches.MatchSummaryProc;
 import odotatesting.processors.matches.OverviewBasicStatsProc;
-
-import java.util.List;
-import java.util.Map;
 
 public class MatchesPage extends BasePage {
 
@@ -21,7 +21,8 @@ public class MatchesPage extends BasePage {
         initializeProcessors(page);
     }
 
-    public void initializeProcessors(Page page) {
+    @Override
+    protected void initializeProcessors(Page page) {
         this.matchSummaryProc = new MatchSummaryProc(page);
         this.overviewBasicStatsProc = new OverviewBasicStatsProc(page);
     }

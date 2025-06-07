@@ -21,6 +21,8 @@ public class BasePage {
         return page;
     }
 
+    protected void initializeProcessors(Page page) {}
+
     public String getPageURL() {
         return page.url();
     }

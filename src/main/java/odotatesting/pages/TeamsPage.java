@@ -14,7 +14,8 @@ public class TeamsPage extends BasePage {
         initializeProcessors(page);
     }
 
-    public void initializeProcessors(Page page) {
+    @Override
+    protected void initializeProcessors(Page page) {
         this.teamsTableDataProc = new TeamsTableDataProc(page);
     }
 
