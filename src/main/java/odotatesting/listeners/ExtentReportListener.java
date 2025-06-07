@@ -13,6 +13,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.microsoft.playwright.Page;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
@@ -23,6 +24,7 @@ import org.testng.ITestResult;
 
 import odotatesting.factory.PlaywrightFactory;
 import odotatesting.utils.InitializeProperties;
+import odotatesting.utils.ScreenshotUtils;
 
 public class ExtentReportListener implements ITestListener, ISuiteListener {
 
@@ -93,10 +95,16 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
         currentTest.log(Status.FAIL, result.getThrowable());
 
         PlaywrightFactory factory = PlaywrightFactory.getFactoryInstance();
-        String scenarioName = result.getMethod().getMethodName();
+        Page page = factory.getPage();
 
-        String screenshotPath = factory.takeScreenshot(scenarioName);
-        currentTest.fail("Screenshot: ", MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        String scenarioName = result.getMethod().getMethodName();
+        String screenshotPath = ScreenshotUtils.takeScreenshot(page, scenarioName);
+
+        if (screenshotPath != null) {
+            currentTest.fail("Screenshot: ", MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        } else {
+            currentTest.fail("Screenshot could not be captured.");
+        }
     }
 
     @Override
