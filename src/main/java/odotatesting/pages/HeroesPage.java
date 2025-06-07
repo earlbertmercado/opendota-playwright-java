@@ -24,7 +24,8 @@ public class HeroesPage extends BasePage {
         initializeProcessors(page);
     }
 
-    private void initializeProcessors(Page page) {
+    @Override
+    protected void initializeProcessors(Page page) {
         this.heroesCountProc = new HeroesCountProc(page);
         this.heroesProTableDataProc = new HeroesProTableDataProc(page);
         this.heroImagesProc = new HeroImagesProc(page);
