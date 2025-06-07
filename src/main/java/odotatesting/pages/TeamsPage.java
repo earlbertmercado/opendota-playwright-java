@@ -7,15 +7,16 @@ import odotatesting.processors.teams.TeamsTableDataProc;
 
 public class TeamsPage extends BasePage {
 
-    private final TeamsTableDataProc teamsTableDataProc;
+    private TeamsTableDataProc teamsTableDataProc;
 
     public TeamsPage(Page page) {
         super(page);
-
-        this.teamsTableDataProc = new TeamsTableDataProc(page);
+        initializeProcessors(page);
     }
 
-    // The following methods are from processor classes.
+    public void initializeProcessors(Page page) {
+        this.teamsTableDataProc = new TeamsTableDataProc(page);
+    }
 
     public boolean validateTeamsTableData() {
         return teamsTableDataProc.hasNoInvalidData();
