@@ -90,7 +90,7 @@
                 <version>3.2.5</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testrunners/all_test.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testrunners/${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
