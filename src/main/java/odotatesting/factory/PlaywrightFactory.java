@@ -34,27 +34,34 @@ public class PlaywrightFactory {
 
     public Page initializeBrowser(Properties properties) {
         String browserName = properties.getProperty("browser").trim();
-        boolean headlessFlag = Boolean.parseBoolean(properties.getProperty("headless", "true"));
+        boolean headlessFlag = Boolean.parseBoolean(properties.getProperty("headless", "false"));
 
         playwright = Playwright.create();
-
         BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions();
 
         switch (browserName.toLowerCase()) {
             case "chromium":
-                launchOptions.setHeadless(headlessFlag).setArgs(List.of("--start-maximized"));
+                launchOptions.setHeadless(headlessFlag);
+                launchOptions.setArgs(List.of("--start-maximized"));
                 browser = playwright.chromium().launch(launchOptions);
                 break;
             case "firefox":
                 launchOptions.setHeadless(headlessFlag);
+                launchOptions.setArgs(List.of("--start-maximized"));
                 browser = playwright.firefox().launch(launchOptions);
                 break;
             case "webkit":
                 launchOptions.setHeadless(headlessFlag);
+                launchOptions.setArgs(List.of("--start-maximized"));
                 browser = playwright.webkit().launch(launchOptions);
                 break;
             case "chrome":
                 launchOptions.setChannel("chrome").setHeadless(headlessFlag);
+                launchOptions.setArgs(List.of("--start-maximized"));
+                browser = playwright.chromium().launch(launchOptions);
+                break;
+            case "edge":
+                launchOptions.setChannel("msedge").setHeadless(headlessFlag);
                 launchOptions.setArgs(List.of("--start-maximized"));
                 browser = playwright.chromium().launch(launchOptions);
                 break;
