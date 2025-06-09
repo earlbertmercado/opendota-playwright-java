@@ -47,13 +47,10 @@ This project provides an automated test suite for validating the OpenDota websit
     - Windows (Command Prompt):
       ```shell
       set SELENIUM_REMOTE_URL=http://localhost:4444
-      ```
-      ```shell
-        mvn clean test -DsuiteXmlFile="<selected testing xml file>"
-        ```
+      mvn clean test -DsuiteXmlFile="<selected testing xml file>"
     - Linux/Mac (Terminal):
       ```shell
-        SELENIUM_REMOTE_URL=http://localhost:4444 mvn test -DsuiteXmlFile="<selected testing xml file>"
+      SELENIUM_REMOTE_URL=http://localhost:4444 mvn test -DsuiteXmlFile="<selected testing xml file>"
         ```
 - When finished running remotely, you can stop the containers and close the Docker Desktop application:
    ```shell
