@@ -59,7 +59,7 @@ This project provides an automated test suite for validating the OpenDota websit
   ```shell
    docker desktop stop
    ```
-
+  
 ## Extent Report
 ExtentReports generates detailed HTML reports for test execution. The reports include:
 - **Test Summary**: Overall test execution summary with pass/fail counts.
