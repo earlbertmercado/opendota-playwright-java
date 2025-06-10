@@ -1,5 +1,5 @@
-# Opendota Playwright Web Automation
-This project provides an automated test suite for validating the OpenDota website. It uses the Playwright framework to interact with the web pages and compares the data displayed there against the data retrieved directly from the OpenDota API. It follows the Page Object Model design pattern, organizing web interactions by page.
+# Opendota Playwright Web Testing Automation
+This project provides an automated testing for validating the OpenDota website. It uses the Playwright framework to interact with the web pages and compares the data displayed there against the data retrieved directly from the OpenDota API. It follows the Page Object Model design pattern, organizing web interactions by page.
 
 ## Technologies Used
 |                   |                       |
@@ -27,6 +27,40 @@ This project provides an automated test suite for validating the OpenDota websit
 - Playwright installed in your project (can be done via Maven dependencies)
 - Selenium Grid setup (optional, for remote execution)
 - Docker (optional, for running Selenium Grid in containers)
+
+## Test Architecture
+![test_architecture](readme-screenshots/test_architecture.png)
+
+## Folder Structure
+```
+odotatesting/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── odotatesting/
+│   │   │       ├── base/                    // Stores base test and base page
+│   │   │       ├── constants/               // Test-specific constants (e.g., API endpoints, element locators, etc.)
+│   │   │       ├── factory/		     // Stores Playwright browser, context, and page management
+│   │   │       ├── listeners/               // Extent report listener
+│   │   │       ├── pages/		     // Page Object Model classes
+│   │   │       ├── processors/	             // Handles data extraction and processing from web pages
+│   │   │       └── utils/		     // Utility classes (e.g., initialize properties, API calls, and screenshot)
+│   │   └── resources/                       // Stores log4j.xml
+│   └── test/
+│       ├── java/
+│       │   └── odotatesting/
+│       │       └── tests/                    // Contains all test case classes
+│       └── resources/
+│           ├── config/                       // Stores Configuration files
+│           └── testrunners/                  // Stores all testng xml files
+├── logs/				      // Stores runtime logs from test executions
+├── reports/				      // Contains generated extent reports
+│   └── screenshots/			      // Captured screenshots from test failures
+├── readme-screenshots/
+├── pom.xml
+├── docker-compose.yaml                       // Docker Compose file for Selenium Grid setup
+└── README.md
+```
 
 ### Running Tests
 #### Locally
