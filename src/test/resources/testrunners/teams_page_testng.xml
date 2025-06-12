@@ -12,4 +12,10 @@
         </classes>
     </test>
 
+    <test verbose="4" name="Teams Profile Tabs Validation">
+        <classes>
+            <class name="odotatesting.tests.teams.TeamProfileTabsTest"/>
+        </classes>
+    </test>
+
 </suite>
