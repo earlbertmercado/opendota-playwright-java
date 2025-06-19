@@ -28,7 +28,7 @@ public class MatchesPage extends BasePage {
     }
 
     public MatchesPage clickTopPublicTab() {
-        page.click(MatchesPageLocators.TOP_PUBLIC_TAB);
+        page.click(MatchesPageLocators.TOP_PUB_MATCHES_TAB);
         return this;
     }
 
