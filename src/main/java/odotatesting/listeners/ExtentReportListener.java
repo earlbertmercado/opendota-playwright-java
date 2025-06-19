@@ -22,7 +22,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import odotatesting.factory.PlaywrightFactory;
+import odotatesting.browser.BrowserManager;
 import odotatesting.utils.InitializeProperties;
 import odotatesting.utils.ScreenshotUtils;
 
@@ -43,12 +43,12 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
         if (!Files.exists(path)) {
             try {
                 Files.createDirectories(path);
-            }catch (IOException e) {
+            } catch (IOException e) {
                 throw new RuntimeException("Couldn't create reports directory: " + e.getMessage(), e);
             }
         }
 
-        extentReports = new ExtentReports();
+        ExtentReports extentReports = new ExtentReports();
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter(OUTPUT_FOLDER + FILE_NAME);
 
         sparkReporter.config().setDocumentTitle("Opendota Playwright Automation Report");
@@ -58,17 +58,15 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
         extentReports.attachReporter(sparkReporter);
         extentReports.setSystemInfo("OS", System.getProperty("os.name"));
         extentReports.setSystemInfo("Browser", properties.getProperty("browser"));
-        extentReports.setSystemInfo("Headless", properties.getProperty("headless"));
+        extentReports.setSystemInfo("Headless", properties.getProperty("isHeadless"));
 
         return extentReports;
-
     }
 
     @Override
     public void onStart(ITestContext context) {
         String suiteExecutionId = UUID.randomUUID().toString();
         ThreadContext.put(UUID_KEY, suiteExecutionId);
-        ThreadContext.put("executionId", suiteExecutionId);
         logger.info("===========Test=Execution=Started============");
     }
 
@@ -76,34 +74,38 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
     public void onTestStart(ITestResult result) {
         ExtentTest test = extentReports.createTest(result.getMethod().getMethodName());
         extentTestThread.set(test);
-        extentTestThread.get().log(Status.INFO,"UUID: " + ThreadContext.get(UUID_KEY));
+        extentTestThread.get().log(Status.INFO, "UUID: " + ThreadContext.get(UUID_KEY));
         logger.info("Test started: {}", result.getMethod().getMethodName());
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        extentTestThread.get().log(Status.PASS,"Test passed: " + result.getMethod().getMethodName());
+        extentTestThread.get().log(Status.PASS, "Test passed: " + result.getMethod().getMethodName());
         logger.info("Test passed: {}", result.getMethod().getMethodName());
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         logger.error("Test failed: {}", result.getMethod().getMethodName());
+
         ExtentTest currentTest = extentTestThread.get();
         currentTest.log(Status.FAIL, "Test failed: " + result.getMethod().getMethodName());
         currentTest.log(Status.FAIL, result.getThrowable().getMessage());
         currentTest.log(Status.FAIL, result.getThrowable());
 
-        PlaywrightFactory factory = PlaywrightFactory.getFactoryInstance();
-        Page page = factory.getPage();
+        BrowserManager factory = BrowserManager.getFactoryInstance();
+        Page page = factory != null ? factory.getPage() : null;
 
-        String scenarioName = result.getMethod().getMethodName();
-        String screenshotPath = ScreenshotUtils.takeScreenshot(page, scenarioName);
-
-        if (screenshotPath != null) {
-            currentTest.fail("Screenshot: ", MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        if (page != null) {
+            String screenshotPath = ScreenshotUtils.takeScreenshot(page, result.getMethod().getMethodName());
+            if (screenshotPath != null) {
+                currentTest.fail("Screenshot: ",
+                        MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+            } else {
+                currentTest.fail("Screenshot could not be captured.");
+            }
         } else {
-            currentTest.fail("Screenshot could not be captured.");
+            currentTest.fail("Page instance was null. No screenshot taken.");
         }
     }
 
@@ -111,12 +113,13 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
     public void onTestSkipped(ITestResult result) {
         extentTestThread.get().log(Status.SKIP, "Test skipped: " + result.getMethod().getMethodName());
         extentTestThread.get().log(Status.INFO, result.getThrowable());
+        logger.warn("Test skipped: {}", result.getMethod().getMethodName());
     }
 
     @Override
     public void onFinish(ITestContext context) {
         extentReports.flush();
         logger.info("===========Test=Execution=Finished===========");
-        ThreadContext.remove("executionId");
+        ThreadContext.remove(UUID_KEY);
     }
 }

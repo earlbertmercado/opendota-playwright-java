@@ -1,14 +1,12 @@
 package odotatesting.pages;
 
-import java.util.Random;
-
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.WaitForSelectorState;
-
 import odotatesting.base.BasePage;
 import odotatesting.constants.TeamsPageLocators;
 import odotatesting.processors.teams.TeamsTableDataProc;
 import odotatesting.processors.teams.TeamProfileTabsProc;
+
+import java.util.Random;
 
 public class TeamsPage extends BasePage {
 
@@ -25,13 +23,6 @@ public class TeamsPage extends BasePage {
     protected void initializeProcessors(Page page) {
         this.teamsTableDataProc = new TeamsTableDataProc(page);
         this.teamProfileTabsProc = new TeamProfileTabsProc(page);
-    }
-
-    // consider placing this method in BasePage if it is used in multiple pages
-    public void waitForElementToBeVisible(String locator) {
-        page.waitForSelector(locator,
-                new Page.WaitForSelectorOptions().
-                        setState(WaitForSelectorState.VISIBLE));
     }
 
     public TeamsPage clickRandomTeam() {

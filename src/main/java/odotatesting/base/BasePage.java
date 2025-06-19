@@ -2,6 +2,7 @@ package odotatesting.base;
 
 import com.microsoft.playwright.Page;
 
+import com.microsoft.playwright.options.WaitForSelectorState;
 import odotatesting.constants.BurgerMenuLocators;
 import odotatesting.constants.NavigationBarLocators;
 import odotatesting.pages.HeroesPage;
@@ -38,6 +39,12 @@ public class BasePage {
 
     public void clickBurgerMenu() {
         page.click(NavigationBarLocators.BURGER_MENU);
+    }
+
+    public void waitForElementToBeVisible(String locator) {
+        page.waitForSelector(locator,
+                new Page.WaitForSelectorOptions().
+                        setState(WaitForSelectorState.VISIBLE));
     }
 
     public HomePage navigateToHomePage() {
