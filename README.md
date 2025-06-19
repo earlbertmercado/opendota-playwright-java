@@ -40,7 +40,7 @@ odotatesting/
 │   │   │   └── odotatesting/
 │   │   │       ├── base/                    // Stores base test and base page
 │   │   │       ├── constants/               // Test-specific constants (e.g., API endpoints, element locators, etc.)
-│   │   │       ├── factory/		     // Stores Playwright browser, context, and page management
+│   │   │       ├── browser/		     // Stores Playwright browser, context, and page management
 │   │   │       ├── listeners/               // Extent report listener
 │   │   │       ├── pages/		     // Page Object Model classes
 │   │   │       ├── processors/	             // Handles data extraction and processing from web pages
