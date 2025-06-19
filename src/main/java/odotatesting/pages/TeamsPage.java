@@ -10,6 +10,8 @@ import java.util.Random;
 
 public class TeamsPage extends BasePage {
 
+    private Random random = new Random();
+
     private TeamsTableDataProc teamsTableDataProc;
     private TeamProfileTabsProc teamProfileTabsProc;
 
@@ -33,8 +35,7 @@ public class TeamsPage extends BasePage {
             throw new RuntimeException("No teams found in the table.");
         }
 
-        Random randomizer = new Random();
-        int randomIndex = randomizer.nextInt(rowCount);
+        int randomIndex = random.nextInt(rowCount);
         page.locator(TeamsPageLocators.TEAM_NAME_COLUMN).nth(randomIndex).click();
         return this;
     }
